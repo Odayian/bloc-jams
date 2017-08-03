@@ -30,6 +30,21 @@ var albumMarconi = {
     ]
 };
 
+//Ben's Example Album
+var albumVHF = {
+    title: 'Television',
+    artist: 'VHF',
+    label: 'RGB',
+    year: '1948',
+    albumArtUrl: 'assets/images/album_covers/20.png',
+    songs: [
+        { title: 'What\'s on?', duration: '3:00' },
+        { title: 'White Noise', duration: '12:06' },
+        { title: 'Tracking Issues', duration: '2:33'},
+        { title: 'Progressive Times', duration: '1:11' },
+        { title: 'Living in a Soap Opera', duration: '6:04'}
+    ]
+};
 var createSongRow = function(songNumber, songName, songLength) {
     var template =
        '<tr class="album-view-song-item">'
@@ -65,6 +80,22 @@ var setCurrentAlbum = function(album) {
     }
 };
 
+
 window.onload = function() {
     setCurrentAlbum(albumPicasso);
 };
+
+var albumCount = 3;
+var nextAlbum = function(){
+    albumCount++;
+    if(albumCount%3 == 0){
+        setCurrentAlbum(albumPicasso);
+    }else if(albumCount%3 == 1){
+        setCurrentAlbum(albumMarconi);
+    }else if (albumCount%3 ==2){
+        setCurrentAlbum(albumVHF);
+    }
+    //debug info
+    console.log("clicked");
+};
+document.getElementsByClassName('album-cover-art')[0].addEventListener("click",nextAlbum);
