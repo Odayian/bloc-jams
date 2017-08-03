@@ -57,14 +57,13 @@ var createSongRow = function(songNumber, songName, songLength) {
     return template;
 };
 
-var setCurrentAlbum = function(album) {
-    // #1
-    var albumTitle = document.getElementsByClassName('album-view-title')[0];
-    var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-    var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-    var albumImage = document.getElementsByClassName('album-cover-art')[0];
-    var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+var albumTitle = document.getElementsByClassName('album-view-title')[0];
+var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
+var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
 
+var setCurrentAlbum = function(album) {
     // #2
     albumTitle.firstChild.nodeValue = album.title;
     albumArtist.firstChild.nodeValue = album.artist;
@@ -80,22 +79,17 @@ var setCurrentAlbum = function(album) {
     }
 };
 
-
 window.onload = function() {
     setCurrentAlbum(albumPicasso);
-};
+    var albumSelect = [albumPicasso, albumMarconi, albumVHF];
+    var albumCount= 1;
+    albumImage.addEventListener("click",function(event){
+        setCurrentAlbum(albumSelect[albumCount]);
+        albumCount++;
+        if(albumCount == albumSelect.length){
+            albumCount=0;
+        }
+        console.log("clicked");
 
-var albumCount = 3;
-var nextAlbum = function(){
-    albumCount++;
-    if(albumCount%3 == 0){
-        setCurrentAlbum(albumPicasso);
-    }else if(albumCount%3 == 1){
-        setCurrentAlbum(albumMarconi);
-    }else if (albumCount%3 ==2){
-        setCurrentAlbum(albumVHF);
-    }
-    //debug info
-    console.log("clicked");
+    });
 };
-document.getElementsByClassName('album-cover-art')[0].addEventListener("click",nextAlbum);
