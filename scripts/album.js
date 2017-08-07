@@ -82,10 +82,22 @@ var setCurrentAlbum = function(album) {
 
 //enter an element and the class you're looking for. bubbles out to search for class and returns the parent
 var findParentByClassName = function(element, targetClass) {
+    var runOnce = false;
     if (element){
         var currentParent = element.parentElement;
         while(currentParent.className !== targetClass && currentParent.className !== null){
             currentParent = currentParent.parentElement;
+            runOnce = true;
+        }
+        //if a parent is never found, log to console.
+        if(currentParent.className == null){
+            console.log("No parent found.");
+            return null;
+        }
+        //if while loop has ran but never matches the targetClass, log to console
+        if(runOnce){
+            console.log("No parent found with that class name.");
+            return null;
         }
         return currentParent;
     }
@@ -142,7 +154,7 @@ window.onload = function() {
                songItem.innerHTML = playButtonTemplate;
            }
        }
-});
+   });
     //add an event listener dynamically to every songRow for leaving and clicking
      for (var i = 0; i < songRows.length; i++) {
          songRows[i].addEventListener('mouseleave', function(event) {
@@ -152,12 +164,12 @@ window.onload = function() {
             if(songItemNumber!== currentlyPlayingSong){
                 songItem.innerHTML = songItemNumber;
             }
+
          });
          //onClick, run clickHandler. ClickHandler: Change track number to pause icon
          songRows[i].addEventListener('click', function(event) {
          // Event handler call
             clickHandler(event.target);
         });
-
     }
 };
