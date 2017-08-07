@@ -82,25 +82,28 @@ var setCurrentAlbum = function(album) {
 
 //enter an element and the class you're looking for. bubbles out to search for class and returns the parent
 var findParentByClassName = function(element, targetClass) {
-    var runOnce = false;
+    console.log("Finding element by "+targetClass);
     if (element){
         var currentParent = element.parentElement;
-        while(currentParent.className !== targetClass && currentParent.className !== null){
+        while(currentParent && currentParent.className !== null && currentParent.className !== targetClass){
             currentParent = currentParent.parentElement;
-            runOnce = true;
         }
-        //if a parent is never found, log to console.
-        if(currentParent.className == null){
+        if(currentParent == null){
+            console.log("No parent found");
+            return null;
+        }else if(currentParent.className == null){
             console.log("No parent found.");
             return null;
         }
         //if while loop has ran but never matches the targetClass, log to console
-        if(runOnce){
+        else if(currentParent.className !== targetClass){
             console.log("No parent found with that class name.");
             return null;
         }
+        console.log("Returning Parent");
         return currentParent;
     }
+    console.log("Element was null");
 };
 //will return the element with the ".song-item-number" class
 var getSongItem = function(element){
