@@ -82,13 +82,28 @@ var setCurrentAlbum = function(album) {
 
 //enter an element and the class you're looking for. bubbles out to search for class and returns the parent
 var findParentByClassName = function(element, targetClass) {
+    console.log("Finding element by "+targetClass);
     if (element){
         var currentParent = element.parentElement;
-        while(currentParent.className !== targetClass && currentParent.className !== null){
+        while(currentParent && currentParent.className !== null && currentParent.className !== targetClass){
             currentParent = currentParent.parentElement;
         }
+        if(currentParent == null){
+            console.log("No parent found");
+            return null;
+        }else if(currentParent.className == null){
+            console.log("No parent found.");
+            return null;
+        }
+        //if while loop has ran but never matches the targetClass, log to console
+        else if(currentParent.className !== targetClass){
+            console.log("No parent found with that class name.");
+            return null;
+        }
+        console.log("Returning Parent");
         return currentParent;
     }
+    console.log("Element was null");
 };
 //will return the element with the ".song-item-number" class
 var getSongItem = function(element){
@@ -142,7 +157,7 @@ window.onload = function() {
                songItem.innerHTML = playButtonTemplate;
            }
        }
-});
+   });
     //add an event listener dynamically to every songRow for leaving and clicking
      for (var i = 0; i < songRows.length; i++) {
          songRows[i].addEventListener('mouseleave', function(event) {
@@ -152,12 +167,12 @@ window.onload = function() {
             if(songItemNumber!== currentlyPlayingSong){
                 songItem.innerHTML = songItemNumber;
             }
+
          });
          //onClick, run clickHandler. ClickHandler: Change track number to pause icon
          songRows[i].addEventListener('click', function(event) {
          // Event handler call
             clickHandler(event.target);
         });
-
     }
 };
