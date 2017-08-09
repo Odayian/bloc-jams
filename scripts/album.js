@@ -47,40 +47,30 @@ var createSongRow = function(songNumber, songName, songLength) {
      + '</tr>'
      ;
 
-    return template;
+    return $(template);
 };
 
 var setCurrentAlbum = function(album) {
-    // #1
-    var albumTitle = document.getElementsByClassName('album-view-title')[0];
-    var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-    var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-    var albumImage = document.getElementsByClassName('album-cover-art')[0];
-    var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
 
-    // #2
-    albumTitle.firstChild.nodeValue = album.title;
-    albumArtist.firstChild.nodeValue = album.artist;
-    albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
-    albumImage.setAttribute('src', album.albumArtUrl);
+    var $albumTitle = $('.album-view-title');
+    var $albumArtist = $('.album-view-artist');
+    var $albumReleaseInfo = $('.album-view-release-info');
+    var $albumImage = $('.album-cover-art');
+    var $albumSongList = $('.album-view-song-list');
 
-    // #3
-    albumSongList.innerHTML = '';
+    $albumTitle.text(album.title);
+    $albumArtist.text(album.aritst);
+    $albumReleaseInfo.text(album.year + ' ' + album.label);
+    $albumImage.attr('src', album.albumArtUrl);
 
-    // #4
+    $albumSongList.empty();
+
     for (var i = 0; i < album.songs.length; i++) {
-        albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
+        var $newRow = createSongRow(i + 1, album.songs[i].title, album.songs[i].duration );
+        $albumSongList.append($newRow);
     }
 };
 
-/*
--on click change from number to play button.
--on mouseleave table row, pause button stays
--on switch songs, check all other rows for currently playing and revert them to numbers. then play new click
--on hover of songs not playing, play icon should still appear
-*/
-
-//enter an element and the class you're looking for. bubbles out to search for class and returns the parent
 var findParentByClassName = function(element, targetClass) {
     console.log("Finding element by "+targetClass);
     if (element){
